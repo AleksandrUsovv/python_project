@@ -8,7 +8,7 @@ while True:
         try:
             int(user_id)
             if len(user_id) != 11:
-                raise UserWarning
+                raise Exception
         except ValueError:
             print('ID_CODE ERROR!')
         except UserWarning:
@@ -91,7 +91,8 @@ while True:
                 elif user_input_2 == '2':
                     check1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1]
                     check2 = [3, 4, 5, 6, 7, 8, 9, 1, 2, 3]
-                    result = 0
+                    result = 0 #user_id[0] * check1[0] + user_id[1] * chek[1]
+                    #38803160272 isikukood Romana
                     cnt = 0
                     for num in check1:
                         result += num * int(user_id[cnt])
