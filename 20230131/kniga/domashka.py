@@ -1,10 +1,12 @@
 with open(f'trimushketera.txt', 'r', encoding='UTF8') as read_file:
-    data = read_file.read()
+    data = read_file.read().lower().replace('.', '').replace('!', '').replace('?', '').replace(',', '').replace('"','')
     slova = data.split()
+    unikalka = list(set(slova))
+    unikalka.sort()
 
-    print('Общее кол-во слов :', len(slova))
+    print('Общее кол-во слов :', len(unikalka))
 
-    unique_slova = list(slova)
+    unique_slova = list(unikalka)
 
     def unique_words(unique_slova):
         unique = []
