@@ -1,0 +1,40 @@
+После создания таблиц, заполним рандомными значениями.
+
+INSERT INTO users (password, email, name, last_login) VALUES
+('slalaskk', 'john@example.com', 'John John', NOW()),
+('askllaskl', 'ira@example.com', 'Ira Ira', NOW()),
+('asdklklask', 'lila@example.com', 'Lila Lila', NOW()),
+('djknksdj', 'dima@example.com', 'Dima Dima', NOW());
+
+INSERT INTO orders (user_id, status, date, amount) VALUES
+(1, 'pending', NOW(), 50.00),
+(2, 'progress', NOW(), 75.00),
+(1, 'delivered', NOW(), 100.00),
+(3, 'delivered', NOW(), 20.00),
+(4, 'pending', NOW(), 60.00),
+(2, 'delivered', NOW(), 50.00),
+(3, 'pending', NOW(), 30.00);
+
+A) To get the number of pending orders of user with e-mail 'john@example.com' :
+
+SELECT COUNT(*) FROM orders
+WHERE user_id = (SELECT id FROM users WHERE email = 'john@example.com')
+AND status = 'pending';
+
+B) To get id, email and name of the users who made an order today :
+
+SELECT u.id, u.email, u.name FROM users u
+JOIN orders o ON u.id = o.user_id
+WHERE DATE(o.date) = CURDATE();
+
+C) To get id, email and name of the users who haven't made any order ever :
+
+SELECT id, email, name FROM users
+WHERE id NOT IN (SELECT user_id FROM orders);
+
+D) To get id, email, name, and the total orders amount of all users whose total order amount sum is at least 100 euro :
+
+SELECT u.id, u.email, u.name, SUM(o.amount) as total_amount FROM users u
+JOIN orders o ON u.id = o.user_id
+GROUP BY u.id
+HAVING total_amount >= 100.00;
